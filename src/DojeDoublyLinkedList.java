@@ -16,4 +16,27 @@ public class DojeDoublyLinkedList<E>{
             this.prev = prev;
         }
     }
+    private  Node<E> search(int index)
+    {
+        Node<E> current;
+        if(index>=size/2)
+        {
+            //index가 뒤에서 출발하는게 더 가까울때
+            current = tail;
+            for(int i=size-1;i>index;i--)
+            {
+                current = current.prev;
+            }
+        }
+        else
+        {
+            //index가 앞에서 출발하는게 더 가까울때
+            current = head;
+            for(int i=0; i<index; i++)
+            {
+                current = current.next;
+            }
+        }
+        return current;
+    }
 }
