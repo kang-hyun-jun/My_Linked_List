@@ -5,6 +5,6 @@ public class Main {
         list.addLast(20);
         list.addLast(30);
         list.addLast(40);
-        System.out.println(list.remove((Integer)30));
+        System.out.println(list.toString());
     }
 }

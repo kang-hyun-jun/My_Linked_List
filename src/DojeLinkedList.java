@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Objects;
 
 public class DojeLinkedList<E> {
@@ -11,10 +12,6 @@ public class DojeLinkedList<E> {
         {
             this.data = data;
             this.next = next;
-        }
-        public String toString()
-        {
-            return String.valueOf(this.data);
         }
     }
 
@@ -181,5 +178,42 @@ public class DojeLinkedList<E> {
     public E removeLast()//가장 뒤에 있는 Node를 제거
     {
         return remove(size-1);
+    }
+    public E get(int index)
+    {
+        //index의 범위가 올바르지 않으면 예외 발생
+        if(index<0 || index>=size)
+        {
+            throw new IndexOutOfBoundsException();
+        }
+        return search(index).data;
+    }
+    public void set(int index, E value)
+    {
+        if(index<0 || index>=size)
+        {
+            throw new IndexOutOfBoundsException();
+        }
+        search(index).data = null; // 삭제
+        search(index).data = value;// 추가
+    }
+
+    @Override
+    public String toString()
+    {
+        if(head==null)
+        {
+            return "[]";
+        }
+        Object[] arr= new Object[size];
+        Node<E> temp = head;
+        int index=0;
+        while(temp!=null)
+        {
+            arr[index]=temp.data;
+            index++;
+            temp=temp.next;
+        }
+        return Arrays.toString(arr);
     }
 }
