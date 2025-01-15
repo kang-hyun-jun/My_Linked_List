@@ -254,5 +254,26 @@ public class DojeDoublyLinkedList<E>{
         }
         return false;
     }
+    public E get(int index)
+    {
+        //index가 잘못 주어진 경우 예외 처리
+        if(index<0 || index>=size)
+        {
+            throw new IndexOutOfBoundsException();
+        }
+        return search(index).data;
+    }
+    public void set(int index, E element)
+    {
+        if(index<0 || index>=size)
+        {
+            throw new IndexOutOfBoundsException();
+        }
+        Node<E> temp = search(index);
+
+        temp.data = null;
+        temp.data = element;
+    }
+
 
 }
