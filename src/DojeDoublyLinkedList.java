@@ -306,5 +306,62 @@ public class DojeDoublyLinkedList<E>{
         }
         return -1;
     }
+    public int size()
+    {
+        return size;
+    }
+    public boolean isEmpty()
+    {
+        return size==0;
+    }
+    public void clear()
+    {
+        Node<E> temp = head;
+        Node<E> temp_next = null;
+        for(int i=0;i<size;i++)
+        {
+            //미리 이후 노드를 백업
+            temp_next = temp.next;
 
+            //노드를 삭제
+            temp.prev = null;
+            temp.data = null;
+            temp.next = null;
+
+            temp = temp_next;
+        }
+        head = null;
+        tail = null;
+        size = 0;
+    }
+    public boolean contains(E element)
+    {
+        int index = indexOf(element);
+        if(index==-1)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    @Override
+    public String toString()
+    {
+        if(head==null)
+        {
+            return "[]";
+        }
+        Object[] arr = new Object[size];
+
+        Node<E> temp = head;
+        for(int i=0;i<size;i++)
+        {
+            arr[i] = temp.data;
+            temp = temp.next;
+        }
+
+        return Arrays.toString(arr);
+    }
 }
