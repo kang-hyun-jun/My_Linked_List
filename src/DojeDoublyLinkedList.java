@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class DojeDoublyLinkedList<E>{
     private Node<E> head; // 노드의 첫 부분을 가리키는 레퍼런스
     private Node<E> tail; // 노드의 끝 부분을 가리키는 레퍼런스
@@ -116,6 +118,141 @@ public class DojeDoublyLinkedList<E>{
         temp_prev.next = newNode;
         temp_next.prev = newNode;
         size++;
+    }
+    public E removeFirst()//가장 앞에 있는 Node를 제거 (제거한 요소는 반환)
+    {
+        //head에 값이 없을때 즉 빈 list일때 예외처리
+        if(head==null)
+        {
+            throw new IndexOutOfBoundsException();
+        }
+        
+        //head에 담겨있던 값을 백업
+        E data = head.data;
+        Node<E> temp = head.next;
+        
+        //head에 있던 값 삭제
+        head.next = null;
+        head.data = null;
+        
+        //head를 head.next값 넣어주기
+        head = temp;
+
+
+        //크기를 줄여준다.
+        size--;
+        //빈 list인 경우에 tail또한 null처리를 해주고, 빈 list가 아닌 경우에는 새로운 head의 prev를 null처리해준다.
+        if(size==0)
+        {
+            tail = null;
+        }
+        else
+        {
+            head.prev = null;
+        }
+
+        return data;
+    }
+    public E remove()//가장 앞에 있는 Node를 제거
+    {
+        return removeFirst();
+    }
+    public E removeLast()//가장 뒤에 있는 Node를 제거
+    {
+        //빈 list일 경우 예외 처리
+        if(head==null)
+        {
+            throw new IndexOutOfBoundsException();
+        }
+        //삭제할 node가 가지고 있던 요소를 백업
+        E data = tail.data;
+        Node<E> temp = tail.prev;
+
+        //노드 데이터 삭제
+        tail.prev = null;
+        tail.data = null;
+
+        //tail에 tail.prev값 넣어주기.
+        tail = temp;
+
+        //노드를 삭제했기에 크기를 줄여준다.
+        size--;
+
+        //빈 list인 경우에는 head도 null을 참조 시킨다.
+        if(size==0)
+        {
+            head = null;
+        }
+        else
+        {
+            temp.next = null;
+        }
+
+        //삭제한 노드의 data를 반환해준다.
+        return data;
+    }
+    public E remove(int index)//인덱스 위치의 요소를 제거
+    {
+        //index의 범위가 잘못된 경우 예외 발생
+        if(index<0 || index>=size)
+        {
+            throw new IndexOutOfBoundsException();
+        }
+        
+        //첫번째 index혹은 마지막 index를 입력받은 경우 기존에 구현해둔 코드를 이용
+        if(index==0)
+        {
+            return removeFirst();
+        }
+        if(index==size-1)
+        {
+            return removeLast();
+        }
+
+        //삭제할 전 노드, 삭제할 노드, 삭제할 이후 노드를 저장.
+        Node<E> temp_prev = search(index-1);
+        Node<E> temp_del = temp_prev.next;
+        Node<E> temp_next = temp_del.next;
+        
+        //data를 반환해주기 위해 미리 저장
+        E data = temp_del.data;
+        
+        //node 삭제
+        temp_del.next = null;
+        temp_del.data = null;
+        temp_del.prev = null;
+
+        //앞뒤 노드 연결
+        temp_prev.next = temp_next;
+        temp_next.prev = temp_prev;
+
+        //크기 감소
+        size--;
+        
+        //미리 저장해둔 데이터 반환.
+        return data;
+    }
+    public boolean remove(E value)//value값이 일치하는 위치의 Node를 제거(중복해서 값이 있는경우에는 가장 앞에 있는 Node를 제거)
+    {
+        //빈 list인 경우에 예외 발생
+        if(size==0)
+        {
+            throw new IndexOutOfBoundsException();
+        }
+        Node<E> temp = head;
+        for(int i=0;i<size;i++)
+        {
+            if(temp.data.equals(value))
+            {
+                remove(i);
+                return true;
+            }
+            else
+            {
+                temp = temp.next;
+            }
+        }
+        return false;
     }
 
 }
