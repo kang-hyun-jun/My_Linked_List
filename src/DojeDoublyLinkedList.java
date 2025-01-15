@@ -274,6 +274,37 @@ public class DojeDoublyLinkedList<E>{
         temp.data = null;
         temp.data = element;
     }
-
+    public int indexOf(E element) //  앞에서부터 검색해서 위치 반환
+    {
+        Node<E> temp = head;
+        for(int i=0;i<size;i++)
+        {
+            if(temp.data.equals(element))
+            {
+                return i;
+            }
+            else
+            {
+                temp = temp.next;
+            }
+        }
+        return -1;
+    }
+    public int lastIndexOf(E element)// 뒤에서 부터 검색해서 위치 반환
+    {
+        Node<E> temp = tail;
+        for(int i=size-1;i>=0;i--)
+        {
+            if(temp.data.equals(element))
+            {
+                return i;
+            }
+            else
+            {
+                temp = temp.prev;
+            }
+        }
+        return -1;
+    }
 
 }
